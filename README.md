@@ -24,5 +24,5 @@ foreach (string meal in dayMenu.Meals)
 
 ### Output
 ```
-Potatisbullar alt blodpudding serveras med keso & lingon
+Blodpudding serveras med keso & lingon
 ```
