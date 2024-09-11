@@ -12,7 +12,7 @@ namespace SkolmatenApi.Client;
 public partial class SkolmatenClient: IDisposable
 {
     private const string ApiVersion = "3";
-    public SkolmatenClient(ILogger<SkolmatenClient> logger, string clientId, string clientVersionId, string language = "sv", 
+    public SkolmatenClient(ILogger logger, string clientId, string clientVersionId, string language = "sv", 
         string baseUrl = "https://skolmaten.se/api/")
     {
         _logger = logger;
@@ -26,7 +26,7 @@ public partial class SkolmatenClient: IDisposable
     }
 
     private readonly HttpClient _httpClient;
-    private readonly ILogger<SkolmatenClient> _logger;
+    private readonly ILogger _logger;
     
     private async Task<TData> GetAsync<TData>(string endpoint, UrlParameters? urlParameters) where TData : IResponse
     {
