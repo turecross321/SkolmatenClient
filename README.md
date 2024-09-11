@@ -1,5 +1,5 @@
 # SkolmatenClient
-dotnet library for communicating with Skolmaten's API
+dotnet library for communicating with Skolmaten's API available on [NuGet](https://www.nuget.org/packages/SkolmatenApi).
 
 ## Example
 ```cs
