@@ -2,5 +2,5 @@
 
 public record ProvincesResponse : IResponse
 {
-    public required ProvinceResponse[] Provinces { get; init; }
+    public required MinimalProvinceResponse[] Provinces { get; init; }
 }

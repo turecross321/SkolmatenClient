@@ -1,6 +1,11 @@
 ﻿using System.Net.Http.Headers;
 using System.Net.Http.Json;
+using System.Reflection;
+using System.Runtime.Serialization;
+using System.Text.Json;
 using Microsoft.Extensions.Logging;
+using SkolmatenApi.Types.Responses;
+using SkolmatenApi.Types.UrlParameters;
 
 namespace SkolmatenApi.Client;
 
@@ -22,19 +27,25 @@ public partial class SkolmatenClient: IDisposable
 
     private readonly HttpClient _httpClient;
     private readonly ILogger<SkolmatenClient> _logger;
-
-    private async Task<TData> GetAsync<TData>(string endpoint)
+    
+    private async Task<TData> GetAsync<TData>(string endpoint, UrlParameters? urlParameters) where TData : IResponse
     {
+        if (urlParameters != null)
+            endpoint += urlParameters.ToUrl();
+        
         _logger.Log(LogLevel.Information, $"GET {endpoint}");
         HttpResponseMessage response = await _httpClient.GetAsync(endpoint);
-        TData? deserialized = await response.Content.ReadFromJsonAsync<TData>();
-
-        if (deserialized == null)
+        try
         {
-            throw new Exception("Failed to deserialize server response!");
+            TData? deserialized = await response.Content.ReadFromJsonAsync<TData>();
+            return deserialized!;
         }
-
-        return deserialized;
+        catch (JsonException e)
+        {
+            string rawResponse = await response.Content.ReadAsStringAsync();
+            _logger.LogError("Failed to deserialize server response!" + rawResponse);
+            throw;
+        }
     }
     
     public void Dispose()

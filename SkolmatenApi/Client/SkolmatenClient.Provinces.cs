@@ -12,12 +12,13 @@ public partial class SkolmatenClient
         return response.Provinces.Select(p => new Province
         {
             Name = p.Name,
-            Id = p.Id
+            Id = p.Id,
+            UrlName = null
         });
     }
     
     private Task<ProvincesResponse> _GetProvincesAsync()
     {
-        return GetAsync<ProvincesResponse>("provinces");
+        return GetAsync<ProvincesResponse>("provinces", null);
     }
 }
