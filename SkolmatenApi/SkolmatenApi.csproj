@@ -1,12 +1,26 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
+        <Authors>turecross321</Authors>
+        <Description>A library for communicating with Skolmaten's API</Description>
+    
+        <PackageProjectUrl>https://github.com/turecross321/SkolmatenClient</PackageProjectUrl>
+    
+        <!-- A list of tags to help the search engine to understand the content of the package -->
+        <PackageTags>skolmaten, sweden, sverige, school, food, meal</PackageTags>
         <TargetFramework>net8.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
+        <EnablePackageValidation>true</EnablePackageValidation>
+        <GenerateDocumentationFile>True</GenerateDocumentationFile>
+        <PackageLicenseExpression>MIT</PackageLicenseExpression>
     </PropertyGroup>
 
     <ItemGroup>
+      <PackageReference Include="DotNet.ReproducibleBuilds" Version="1.2.25">
+        <PrivateAssets>all</PrivateAssets>
+        <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      </PackageReference>
       <PackageReference Include="Microsoft.Extensions.Logging" Version="8.0.0" />
       <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="8.0.1" />
       <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="8.0.0" />
