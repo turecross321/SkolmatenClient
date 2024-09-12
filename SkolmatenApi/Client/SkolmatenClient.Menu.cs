@@ -8,19 +8,29 @@ public partial class SkolmatenClient
 {
     public Task<Menu> GetMenu(School school, int weekLimit, int specificWeek, int year)
     {
-        return GetMenu(school, weekLimit, null, specificWeek, year);
+        return GetMenu(school.Id, weekLimit, null, specificWeek, year);
+    }
+    
+    public Task<Menu> GetMenu(long id, int weekLimit, int specificWeek, int year)
+    {
+        return GetMenu(id, weekLimit, null, specificWeek, year);
     }
     
     public Task<Menu> GetRecentMenu(School school, int weekLimit = 1, int weekOffset = 0)
     {
-        return GetMenu(school, weekLimit, weekOffset, null, null);
+        return GetMenu(school.Id, weekLimit, weekOffset, null, null);
     }
     
-    private async Task<Menu> GetMenu(School school, int weekLimit, int? weekOffset, int? specificWeek, int? year)
+    public Task<Menu> GetRecentMenu(long schoolId, int weekLimit = 1, int weekOffset = 0)
+    {
+        return GetMenu(schoolId, weekLimit, weekOffset, null, null);
+    }
+    
+    private async Task<Menu> GetMenu(long schoolId, int weekLimit, int? weekOffset, int? specificWeek, int? year)
     {
         MenuResponse response = await GetMenu(new GetMenuParameters
         {
-            SchoolId = school.Id,
+            SchoolId = schoolId,
             WeekLimit = weekLimit,
             WeekOffset = weekOffset,
             SpecificWeek = specificWeek,

@@ -11,9 +11,9 @@ public class Examples(SkolmatenClient client, ILogger logger)
     public async Task PrintFirstMeal()
     {
         IEnumerable<Province> provinces = await client.GetProvincesAsync();
-        IEnumerable<District> districts = await client.GetDistrictsAsync(provinces.First());
-        IEnumerable<School> schools = await client.GetSchoolsAsync(districts.First());
-        School school = schools.First();
+        IEnumerable<District> districts = await client.GetDistrictsAsync(provinces.Last());
+        IEnumerable<School> schools = await client.GetSchoolsAsync(districts.Last());
+        School school = schools.Last();
 
         Menu menu = await client.GetRecentMenu(school);
         DayMenu dayMenu = menu.Weeks.First().Days.First();
