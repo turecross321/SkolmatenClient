@@ -9,4 +9,3 @@ Logger<SkolmatenClient> logger = new Logger<SkolmatenClient>(factory);
 using SkolmatenClient client = new(logger, args[0], args[1]);
 
 Examples examples = new Examples(client, logger);
-await examples.PrintFirstMeal();
