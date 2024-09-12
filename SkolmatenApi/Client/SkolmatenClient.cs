@@ -45,7 +45,8 @@ public partial class SkolmatenClient: IDisposable
             throw;
         }
     }
-    
+
+    /// <inheritdoc />
     public void Dispose()
     {
         _httpClient.Dispose();
