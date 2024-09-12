@@ -1,5 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-using SkolmatenApi.Attributes;
+﻿using SkolmatenApi.Attributes;
 
 namespace SkolmatenApi.Types.UrlParameters;
 

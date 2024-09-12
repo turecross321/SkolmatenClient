@@ -1,7 +1,6 @@
 ﻿using Microsoft.Extensions.Logging;
 using Skolmaten.Examples;
 using SkolmatenApi.Client;
-using SkolmatenApi.Types;
 
 using ILoggerFactory factory = LoggerFactory.Create(builder => builder.AddConsole());
 Logger<SkolmatenClient> logger = new Logger<SkolmatenClient>(factory);
