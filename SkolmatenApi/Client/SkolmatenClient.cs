@@ -10,6 +10,14 @@ namespace SkolmatenApi.Client;
 public partial class SkolmatenClient: IDisposable
 {
     private const string ApiVersion = "3";
+    /// <summary>
+    /// Client for Skolmatens' v3 API
+    /// </summary>
+    /// <param name="logger"></param>
+    /// <param name="clientId"></param>
+    /// <param name="clientVersionId"></param>
+    /// <param name="language"></param>
+    /// <param name="baseUrl"></param>
     public SkolmatenClient(ILogger logger, string clientId, string clientVersionId, string language = "sv", 
         string baseUrl = "https://skolmaten.se/api/")
     {
