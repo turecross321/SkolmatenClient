@@ -12,5 +12,5 @@ public record MenuResponse : IResponse
     [JsonPropertyName("Bulletin")]
     public MenuBulletinResponse? Bulletin { get; init; }
     [JsonPropertyName("School")]
-    public SchoolResponse School { get; init; }
+    public SchoolResponse? School { get; init; }
 }
