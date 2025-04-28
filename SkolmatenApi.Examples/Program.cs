@@ -5,6 +5,7 @@ using SkolmatenApi.Client;
 using ILoggerFactory factory = LoggerFactory.Create(builder => builder.AddConsole());
 Logger<SkolmatenClient> logger = new Logger<SkolmatenClient>(factory);
 
-using SkolmatenClient client = new(logger, args[0], args[1]);
+using SkolmatenClient client = new(logger);
 
 Examples examples = new Examples(client, logger);
+await examples.PrintSchoolMenu();

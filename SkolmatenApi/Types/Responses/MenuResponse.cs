@@ -1,9 +1,16 @@
-﻿namespace SkolmatenApi.Types.Responses;
+﻿using System.Text.Json.Serialization;
 
-public record MenuResponse: IResponse
+namespace SkolmatenApi.Types.Responses;
+
+public record MenuResponse : IResponse
 {
-    public required bool FeedbackAllowed { get; init; }
-    public required MenuWeekResponse[] Weeks { get; init; }
-    public required FullSchoolResponse School { get; init; }
-    public required string[] BulletIns { get; init; }
+    public required Guid Id { get; init; }
+    public required string Name { get; init; }
+    public required int NumberOfItems { get; init; }
+    [JsonPropertyName("WeekState")]
+    public MenuWeekStateResponse WeekState { get; init; }
+    [JsonPropertyName("Bulletin")]
+    public MenuBulletinResponse Bulletin { get; init; }
+    [JsonPropertyName("School")]
+    public SchoolResponse School { get; init; }
 }

@@ -2,6 +2,7 @@
 
 public record SchoolsResponse: IResponse
 {
-    public required MinimalSchoolResponse[] Schools { get; init; }
-    public required MinimalDistrictResponse District { get; init; }
+    public required SchoolResponse[] Schools { get; init; }
+    public required DistrictResponse District { get; init; }
+    public required ProvinceResponse Province { get; init; }
 }
