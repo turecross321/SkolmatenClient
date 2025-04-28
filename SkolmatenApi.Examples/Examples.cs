@@ -8,20 +8,15 @@ public class Examples(SkolmatenClient client, ILogger logger)
 {
     public async Task PrintSchoolMenu()
     {
-        IEnumerable<Province> provinces = await client.GetProvincesAsync();
-        var province = provinces.Last();
-        Console.WriteLine(province.Name);
-        
-        IEnumerable<District> districts = await client.GetDistrictsAsync(province);
-        var district = districts.Last();
-        Console.WriteLine(district.Name);
-        
-        IEnumerable<School> schools = await client.GetSchoolsAsync(district);
-        School school = schools.Last();
-        Console.WriteLine(school.Name);
+        string url = "rokskola";
+        Menu menu = await client.GetMenuAsync(url, 18, 2025);
 
-        Menu menu = await client.GetMenuAsync(school, 20, 2024);
-
+        if (menu.WeekState == null)
+        {
+            Console.WriteLine("No weekstate available that week");
+            return;
+        }
+        
         foreach (MenuDay day in menu.WeekState.Days)
         {
             foreach (MenuMeal meal in day.Meals)

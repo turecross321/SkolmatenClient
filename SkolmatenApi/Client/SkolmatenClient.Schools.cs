@@ -15,6 +15,9 @@ public partial class SkolmatenClient
         return response.Schools.Select(School.FromResponse);
     }
     
+    // todo: implement search (api no version)
+    // todo: implement schools nearby (api 3)
+    
     private Task<SchoolsResponse> _GetSchoolsAsync(GetSchoolsParameters parameters)
     {
         return GetAsync<SchoolsResponse>($"schools", parameters);
