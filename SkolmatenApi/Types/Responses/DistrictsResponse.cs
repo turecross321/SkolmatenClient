@@ -2,6 +2,6 @@
 
 public record DistrictsResponse: IResponse
 {
-    public required MinimalDistrictResponse[] Districts { get; init; }
-    public required MinimalProvinceResponse Province { get; init; }
+    public required DistrictResponse[] Districts { get; init; }
+    public required ProvinceResponse Province { get; init; }
 }

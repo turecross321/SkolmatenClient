@@ -6,75 +6,71 @@ namespace SkolmatenApi.Client;
 
 public partial class SkolmatenClient
 {
-    public Task<Menu> GetMenu(School school, int weekLimit, int specificWeek, int year)
+    /// <summary>
+    /// Fetch the menu during a specific week for a school using its url name
+    /// </summary>
+    /// <param name="schoolUrlName">The url name for the school - eg. "rokskola" </param>
+    /// <param name="week">The week</param>
+    /// <param name="year">The year</param>
+    public async Task<Menu> GetMenuAsync(string schoolUrlName, int week, int year)
     {
-        return GetMenu(school.Id, weekLimit, null, specificWeek, year);
-    }
-    
-    public Task<Menu> GetMenu(long id, int weekLimit, int specificWeek, int year)
-    {
-        return GetMenu(id, weekLimit, null, specificWeek, year);
-    }
-    
-    public Task<Menu> GetRecentMenu(School school, int weekLimit = 1, int weekOffset = 0)
-    {
-        return GetMenu(school.Id, weekLimit, weekOffset, null, null);
-    }
-    
-    public Task<Menu> GetRecentMenu(long schoolId, int weekLimit = 1, int weekOffset = 0)
-    {
-        return GetMenu(schoolId, weekLimit, weekOffset, null, null);
-    }
-    
-    private async Task<Menu> GetMenu(long schoolId, int weekLimit, int? weekOffset, int? specificWeek, int? year)
-    {
-        MenuResponse response = await GetMenu(new GetMenuParameters
+        MenuResponse response = await GetMenuAsync_(new GetMenuParameters
         {
-            SchoolId = schoolId,
-            WeekLimit = weekLimit,
-            WeekOffset = weekOffset,
-            SpecificWeek = specificWeek,
+            SchoolUrlName = schoolUrlName,
+            Week = week,
             Year = year,
 
         });
-        return new Menu
-        {
-            Weeks = response.Weeks.Select(w => new WeekMenu
-            {
-                Year = w.Year,
-                WeekNumber = w.Number,
-                Days = w.Days.Select(d => new DayMenu
-                {
-                    Date = DateTimeOffset.FromUnixTimeSeconds(d.Date),
-                    Meals = d.Items
-                })
-                }),
-            School = new School
-            {
-                Id = response.School.Id,
-                Name = response.School.Name,
-                District = new District
-                {
-                    Id = response.School.District.Id,
-                    Name = response.School.District.Name,
-                    Province = new Province
-                    {
-                        Id = response.School.District.Province.Id,
-                        Name = response.School.District.Province.Name,
-                        UrlName = response.School.District.Province.UrlName
-                    },
-                    UrlName = response.School.District.UrlName
-                },
-                UserDistance = null,
-                UrlName = response.School.UrlName
-            },
-            BulletIns = response.BulletIns
-        };
 
+        return Menu.FromResponse(response);
     }
     
-    private Task<MenuResponse> GetMenu(GetMenuParameters parameters)
+    /// <summary>
+    /// Fetch the menu during a specific week for a school using its ID
+    /// </summary>
+    /// <param name="schoolId">The GUID ID for the school - eg. "52a571c0-14cc-4daf-835a-c1cf08119f31" </param>
+    /// <param name="week">The week</param>
+    /// <param name="year">The year</param>
+    /// <returns></returns>
+    public async Task<Menu> GetMenuAsync(Guid schoolId, int week, int year)
     {
-        return GetAsync<MenuResponse>("menu", parameters);
+        MenuResponse response = await GetMenuAsync_(new GetMenuParameters
+        {
+            SchoolId = schoolId,
+            Week = week,
+            Year = year,
+
+        });
+
+        return Menu.FromResponse(response);
+    }
+    
+    /// <summary>
+    /// Fetch the menu during a specific week for a school
+    /// </summary>
+    /// <param name="school">The school</param>
+    /// <param name="week">The week</param>
+    /// <param name="year">The year</param>
+    public async Task<Menu> GetMenuAsync(School school, int week, int year)
+    {
+        MenuResponse response = await GetMenuAsync_(new GetMenuParameters
+        {
+            SchoolId = school.Id,
+            Week = week,
+            Year = year,
+
+        });
+
+        return Menu.FromResponse(response);
+    }
+    
+    private Task<MenuResponse> GetMenuAsync_(GetMenuParameters parameters)
+    {
+        if (parameters.SchoolUrlName != null)
+        {
+            return GetAsync<MenuResponse>($"menu/school/{parameters.SchoolUrlName}", parameters);
+        }
+        
+        return GetAsync<MenuResponse>($"menu/{parameters.SchoolId}", parameters);
     }
 }

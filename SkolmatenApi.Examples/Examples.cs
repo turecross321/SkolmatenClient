@@ -6,43 +6,63 @@ namespace Skolmaten.Examples;
 
 public class Examples(SkolmatenClient client, ILogger logger)
 {
-    
-    public async Task PrintFirstMeal()
+    public async Task PrintSchoolMenu()
     {
-        IEnumerable<Province> provinces = await client.GetProvincesAsync();
-        IEnumerable<District> districts = await client.GetDistrictsAsync(provinces.Last());
-        IEnumerable<School> schools = await client.GetSchoolsAsync(districts.Last());
-        School school = schools.Last();
+        string url = "rokskola";
+        Menu menu = await client.GetMenuAsync(url, 18, 2025);
 
-        Menu menu = await client.GetRecentMenu(school);
-        DayMenu dayMenu = menu.Weeks.First().Days.First();
-
-        foreach (string meal in dayMenu.Meals)
+        if (menu.WeekState == null)
         {
-            Console.WriteLine(meal);
+            Console.WriteLine("No weekstate available that week");
+            return;
+        }
+        
+        foreach (MenuDay day in menu.WeekState.Days)
+        {
+            foreach (MenuMeal meal in day.Meals)
+            {
+                Console.WriteLine($"{day.Date}: {meal.Name}");
+            }
+        }
+    }
+    
+    public async Task PrintEveryDistrict()
+    {
+        var allDistricts = await GetEveryDistrict();
+
+        foreach (District district in allDistricts)
+        {
+            Console.WriteLine($"[{district.Name}] {district.Id}");
         }
     }
     
     public async Task PrintEverySchool()
     {
+        var districts = await GetEveryDistrict();
+        
+        foreach (District district in districts)
+        {
+            var schools = await client.GetSchoolsAsync(district);
+            foreach (School school in schools)
+            {
+                Console.WriteLine($"[{district.Name}] {school.Name}");
+            }
+        }
+    }
+    
+    private async Task<List<District>> GetEveryDistrict()
+    {
         var provinces = await client.GetProvincesAsync();
-        List<School> allSchools = new List<School>();
+        List<District> allDistricts = new List<District>();
 
-        logger.LogInformation("Fetching every single school!");
+        logger.LogInformation("Fetching every single district!");
 
         foreach (Province province in provinces)
         {
             var districts = await client.GetDistrictsAsync(province);
-            foreach (District district in districts)
-            {
-                var schools = await client.GetSchoolsAsync(district);
-                allSchools.AddRange(schools);
-            }
+            allDistricts.AddRange(districts);
         }
 
-        foreach (School school in allSchools)
-        {
-            Console.WriteLine($"[{school.District?.Name}] {school.Name}");
-        }
+        return allDistricts;
     }
 }

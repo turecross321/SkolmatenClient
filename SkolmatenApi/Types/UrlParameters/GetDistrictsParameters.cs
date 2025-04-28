@@ -5,5 +5,5 @@ namespace SkolmatenApi.Types.UrlParameters;
 public class GetDistrictsParameters: UrlParameters
 {
     [UrlParameter("province")]
-    public required long ProvinceId { get; init; }
+    public required Guid? ProvinceId { get; init; }
 }

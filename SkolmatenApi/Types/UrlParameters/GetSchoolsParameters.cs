@@ -5,5 +5,5 @@ namespace SkolmatenApi.Types.UrlParameters;
 public class GetSchoolsParameters: UrlParameters
 {
     [UrlParameter("district")]
-    public required long DistrictId { get; init; }
+    public required Guid DistrictId { get; init; }
 }
