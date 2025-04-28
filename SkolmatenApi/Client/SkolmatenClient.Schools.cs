@@ -6,6 +6,10 @@ namespace SkolmatenApi.Client;
 
 public partial class SkolmatenClient
 {
+    /// <summary>
+    /// Get all schools in specified district (kommun)
+    /// </summary>
+    /// <param name="district">District</param>
     public async Task<IEnumerable<School>> GetSchoolsAsync(District district)
     {
         SchoolsResponse response = await _GetSchoolsAsync(new GetSchoolsParameters()

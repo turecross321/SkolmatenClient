@@ -7,17 +7,20 @@ using SkolmatenApi.Types.UrlParameters;
 
 namespace SkolmatenApi.Client;
 
+/// <summary>
+/// Client for Skolmatens' v4 API
+/// </summary>
 public partial class SkolmatenClient: IDisposable
 {
     private const string ApiVersion = "4";
-
+    
     /// <summary>
-    /// Client for Skolmatens' v4 API
+    /// Constructor for Skolmaten client
     /// </summary>
-    /// <param name="logger"></param>
-    /// <param name="clientToken"></param>
-    /// <param name="language"></param>
-    /// <param name="baseUrl"></param>
+    /// <param name="logger">Logger to use</param>
+    /// <param name="clientToken">Client token used to authenticate. The default value is taken from the web app.</param>
+    /// <param name="language">Accept language header. This probably doesn't actually change anything.</param>
+    /// <param name="baseUrl">Base url for skolmaten's API</param>
     public SkolmatenClient(ILogger logger, string clientToken = "web-eaa12e50-c84c-4b4a-9cfe-4e3fcbcd9165", string language = "sv", 
         string baseUrl = "https://skolmaten.se/api/")
     {

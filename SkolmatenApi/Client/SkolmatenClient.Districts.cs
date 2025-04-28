@@ -6,6 +6,11 @@ namespace SkolmatenApi.Client;
 
 public partial class SkolmatenClient
 {
+    /// <summary>
+    /// Get all districts (kommuner) in a specific province (län)
+    /// </summary>
+    /// <param name="province"></param>
+    /// <returns></returns>
     public async Task<IEnumerable<District>> GetDistrictsAsync(Province province)
     {
         DistrictsResponse response = await _GetDistrictsAsync(new GetDistrictsParameters {ProvinceId = province.Id});
